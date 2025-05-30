@@ -1,0 +1,5 @@
+yfinance 
+ta-lib 
+matplotlib 
+seaborn 
+pynance
