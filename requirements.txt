@@ -1,6 +1,0 @@
-yfinance 
-ta-lib 
-matplotlib 
-seaborn 
-pynance
-scikit-learn
