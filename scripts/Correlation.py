@@ -1,6 +1,6 @@
 # Correlation.py
 import pandas as pd
-from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from scipy.stats import pearsonr
 from typing import Dict  # Add this import to resolve the NameError
 
@@ -36,14 +36,14 @@ def align_dates(stock_dfs, news_df, start_date='2023-01-01', end_date='2024-12-3
 
 def perform_sentiment_analysis(news_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Perform sentiment analysis on news headlines using TextBlob.
+    Perform sentiment analysis on news headlines using VADER (finance lexicon).
     Handles null or uninformative headlines to reduce 0.0 bias.
     """
+    analyzer = SentimentIntensityAnalyzer()
     def get_sentiment(text):
         if not text or not isinstance(text, str) or len(text.strip()) < 5:
             return 0.0
-        blob = TextBlob(text)
-        return blob.sentiment.polarity
+        return analyzer.polarity_scores(text)['compound']
 
     news_df['Sentiment'] = news_df['Headline'].apply(get_sentiment)
     return news_df
