@@ -8,12 +8,7 @@ import numpy as np
 import os
 from IPython.display import display
 
-# References:
-# - TA-Lib: https://ta-lib.github.io/ta-lib/
-# - PyNance: https://pynance.net/
-# - yfinance: https://github.com/ranaroussi/yfinance
-# - Pandas: https://pandas.pydata.org/docs/
-# - Matplotlib/Seaborn: https://matplotlib.org/, https://seaborn.pydata.org/
+
 
 sns.set(style="darkgrid")
 
