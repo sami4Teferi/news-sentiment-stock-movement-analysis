@@ -37,14 +37,15 @@ def align_dates(stock_dfs, news_df, start_date='2023-01-01', end_date='2024-12-3
 def perform_sentiment_analysis(news_df: pd.DataFrame) -> pd.DataFrame:
     """
     Perform sentiment analysis on news headlines using TextBlob.
-    
-    Args:
-        news_df (pd.DataFrame): News DataFrame with a 'Headline' column.
-    
-    Returns:
-        pd.DataFrame: News DataFrame with an additional 'Sentiment' column.
+    Handles null or uninformative headlines to reduce 0.0 bias.
     """
-    news_df['Sentiment'] = news_df['Headline'].apply(lambda x: TextBlob(str(x)).sentiment.polarity)
+    def get_sentiment(text):
+        if not text or not isinstance(text, str) or len(text.strip()) < 5:
+            return 0.0
+        blob = TextBlob(text)
+        return blob.sentiment.polarity
+
+    news_df['Sentiment'] = news_df['Headline'].apply(get_sentiment)
     return news_df
 
 def aggregate_sentiments(news_df: pd.DataFrame) -> pd.DataFrame:
